@@ -95,6 +95,9 @@
       ampm () {
         this.onChange();
       },
+      currentTime () {
+        this.onChangeCurrentTime();
+      }
     },
     methods: {
       getHour() {
@@ -107,6 +110,12 @@
            return this.hour + (this.ampm === 'PM' ? 12 : 0);
          }
         }
+      },
+      onChangeCurrentTime () {
+        const cTime = new Date(this.currentTime)
+        this.hour = cTime.getHours();
+        this.minute = cTime.getMinutes();
+        this.second = cTime.getSeconds();
       },
       onChange () {
         this.$emit('update', {

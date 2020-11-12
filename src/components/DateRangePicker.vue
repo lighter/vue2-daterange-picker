@@ -83,6 +83,7 @@
                 <calendar :monthDate="monthDate"
                           :locale-data="locale"
                           :start="start" :end="end"
+                          :startHour="startHour" :startMinute="startMinute"
                           :minDate="min" :maxDate="max"
                           :show-dropdowns="showDropdowns"
 
@@ -113,6 +114,7 @@
                 <calendar :monthDate="nextMonthDate"
                           :locale-data="locale"
                           :start="start" :end="end"
+                          :startHour="startHour" :startMinute="startMinute"
                           :minDate="min" :maxDate="max"
                           :show-dropdowns="showDropdowns"
 
@@ -149,6 +151,7 @@
               :locale="locale"
               :clickCancel="clickCancel"
               :clickApply="clickedApply"
+              :clickClose="clickClose"
               :in_selection="in_selection"
               :autoApply="autoApply"
         >
@@ -194,6 +197,14 @@
       event: 'update',
     },
     props: {
+      startHour: {
+        type: [Number, String],
+        default: 0
+      },
+      startMinute: {
+        type: [Number, String],
+        default: 0
+      },
       /**
        * minimum date allowed to be selected
        * @default null
@@ -462,6 +473,8 @@
         }
         data.locale.daysOfWeek = weekDays
       }
+      data.hour = this.hour
+      data.minute = this.minute
       return data
     },
     methods: {
@@ -579,12 +592,15 @@
       },
       clickedApply () {
         // this.open = false
-        this.togglePicker(false, true)
+        // this.togglePicker(false, true)
         /**
          * Emits when the user selects a range from the picker and clicks "apply" (if autoApply is true).
          * @param {json} value - json object containing the dates: {startDate, endDate}
          */
         this.$emit('update', {startDate: this.start, endDate: this.singleDatePicker && this.singleDatePicker !== 'range' ? this.start : this.end})
+      },
+      clickClose () {
+        this.togglePicker(false, true)
       },
       clickCancel () {
         if (this.open) {

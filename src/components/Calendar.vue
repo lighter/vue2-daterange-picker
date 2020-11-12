@@ -70,6 +70,14 @@
       dateFormat: {
         type: Function,
         default: null
+      },
+      startHour: {
+        type: [Number, String],
+        default: 0
+      },
+      startMinute: {
+        type: [Number, String],
+        default: 0
       }
     },
     data () {
@@ -184,7 +192,7 @@
         if (dayOfWeek === this.locale.firstDay)
           startDay = daysInLastMonth - 6;
 
-        let curDate = new Date(lastYear, lastMonth - 1, startDay, 12, 0, 0);
+        let curDate = new Date(lastYear, lastMonth - 1, startDay, this.startHour, this.startMinute, 0);
         for (let i = 0, col = 0, row = 0; i < 6 * 7; i++, col++, curDate.setDate(curDate.getDate() + 1)) {
           if (i > 0 && col % 7 === 0) {
             col = 0;
