@@ -114,7 +114,7 @@
                 <calendar :monthDate="nextMonthDate"
                           :locale-data="locale"
                           :start="start" :end="end"
-                          :startHour="startHour" :startMinute="startMinute"
+                          :startHour="endHour" :startMinute="endMinute"
                           :minDate="min" :maxDate="max"
                           :show-dropdowns="showDropdowns"
 
@@ -202,6 +202,14 @@
         default: 0
       },
       startMinute: {
+        type: [Number, String],
+        default: 0
+      },
+      endHour: {
+        type: [Number, String],
+        default: 0
+      },
+      endMinute: {
         type: [Number, String],
         default: 0
       },
@@ -542,8 +550,11 @@
           }
           if (!this.in_selection) {
             this.onSelect();
-            if (this.autoApply)
+            if (this.autoApply) {
+              this.end.setHours(this.endHour, this.endMinute, 59, 0);
+              this.start.setHours(this.startHour, this.startMinute, 0, 0);
               this.clickedApply();
+            }
           }
         } else {
           this.start = this.normalizeDatetime(value, this.start);
